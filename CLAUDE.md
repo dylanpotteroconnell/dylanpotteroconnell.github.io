@@ -30,7 +30,8 @@ personal_site/
 ```
 
 ## Key Decisions
-- **Hosting**: GitHub Pages (deploy via `git push` to main branch)
+- **Repo**: `dylanpotteroconnell/dylanpotteroconnell.github.io` (renamed from `personal_site`)
+- **Hosting**: GitHub Pages at https://dylanpotteroconnell.github.io/ (deploy via `git push` to main branch)
 - **Domain**: dylanoconnell.com (to be purchased later, likely via Cloudflare Registrar)
 - **Contact**: Email + LinkedIn on landing page
 - **Sections**: Projects (active), Blog/Writing (planned for future)
