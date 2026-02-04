@@ -537,6 +537,16 @@
     updateScoreBar();
   }
 
+  function getGrade(score, maxScore) {
+    const pct = maxScore > 0 ? (score / maxScore) * 100 : 0;
+    if (pct === 100) return "Standing ovation \u2014 the orchestra wouldn\u2019t dare play you off";
+    if (pct >= 80)  return "Tearful thank-you to your agent, your mother, and the Academy";
+    if (pct >= 60)  return "Thanked your publicist, your lawyer, three producers, two casting directors, and a caterer";
+    if (pct >= 40)  return "Forgot to thank your spouse";
+    if (pct >= 20)  return "Played off by the orchestra mid-sentence";
+    return "Tripped on the stairs walking up to the stage";
+  }
+
   function showSummary() {
     document.getElementById('game').style.display = 'none';
     const maxScore = speeches.length * 10;
@@ -549,13 +559,18 @@
       </div>
     `).join('');
 
+    const grade = getGrade(score, maxScore);
+
     const summaryEl = document.getElementById('summary');
     summaryEl.style.display = 'block';
     summaryEl.innerHTML = `
       <div class="summary">
         <h2>Game Over</h2>
         <div class="final-score">${score} / ${maxScore}</div>
-        <div style="margin-top:10px; color:#aaa">
+        <div style="margin-top:12px; color:#d4af37; font-style:italic; font-size:1.1rem">
+          ${escapeHtml(grade)}
+        </div>
+        <div style="margin-top:6px; color:#aaa">
           ${correctCount} of ${speeches.length} correct
         </div>
         <div class="card breakdown" style="margin-top:24px">
