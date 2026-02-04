@@ -7,7 +7,7 @@
 body {
     font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
     color: #222;
-    background: #fff;
+    background: #faf8f5;
     line-height: 1.6;
     padding: 4rem 1.5rem;
 }
@@ -32,10 +32,19 @@ header {
 h1 {
     font-size: 1.8rem;
     font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.bio {
+    font-size: 1rem;
+    color: #666;
     margin-bottom: 0.4rem;
 }
 
 .contact {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     font-size: 0.95rem;
     color: #555;
 }
@@ -43,12 +52,11 @@ h1 {
 .contact a {
     color: #555;
     text-decoration: none;
-    border-bottom: 1px solid #ccc;
+    line-height: 0;
 }
 
 .contact a:hover {
     color: #000;
-    border-bottom-color: #000;
 }
 
 h2 {
@@ -90,3 +98,4 @@ footer {
     padding-top: 1.5rem;
     border-top: 1px solid #eee;
 }
+
