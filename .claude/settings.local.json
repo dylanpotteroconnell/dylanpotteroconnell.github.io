@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(gh:*)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" remote -v)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" add index.html styles.css .gitignore CLAUDE.md projects/oscars-speech-game/.gitkeep)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" commit -m \"$\\(cat <<''EOF''\nInitial site: landing page with projects section\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" config user.name \"Dylan O''Connell\")",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" config user.email \"dylan.potter.oconnell@gmail.com\")",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" branch:*)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" remote add:*)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" push -u origin main)",
+      "Bash(git remote set-url:*)",
+      "WebFetch(domain:dylanpotteroconnell.github.io)",
+      "WebFetch(domain:docs.kalshi.com)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" log --oneline -5)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" status)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" diff)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" add index.html styles.css CLAUDE.md projects/oscars-speech-game/index.html projects/oscars-speech-game/data.json)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" commit -m \"$\\(cat <<''EOF''\nAdd Oscars Speech Game and move contact links to footer\n\n- Add oscars-speech-game project files\n- Move email and LinkedIn to footer, remove GitHub link\n- Update CLAUDE.md with new repo name and URL\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" push)",
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" rm --cached CLAUDE.md)"
+    ]
+  }
+}
