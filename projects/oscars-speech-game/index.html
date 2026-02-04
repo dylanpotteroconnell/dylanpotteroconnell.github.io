@@ -393,6 +393,10 @@
       </div>
 
       <div id="reveal-section" style="display:none"></div>
+
+      <div style="text-align:center; margin-top:16px">
+        <a class="report-link" href="${feedbackUrl(sp)}" target="_blank">Report an issue with this clue</a>
+      </div>
     `;
 
     document.getElementById('guess-btn').addEventListener('click', handleGuess);
@@ -513,8 +517,6 @@
           <button class="btn-primary" id="next-btn" style="max-width:200px">
             ${currentIndex < speeches.length - 1 ? 'Next Speech' : 'See Results'}
           </button>
-          <br>
-          <a class="report-link" href="${feedbackUrl(sp)}" target="_blank">Report an issue with this clue</a>
         </div>
       </div>
     `;
