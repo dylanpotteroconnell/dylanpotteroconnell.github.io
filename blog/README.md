@@ -16,9 +16,10 @@ This folder contains blog posts for dylanoconnell.com.
 blog/
 └── my-post-name/
     ├── index.html    # Your post
-    └── images/       # Images, GIFs, etc.
+    └── images/       # Images, videos, etc.
         ├── photo.jpg
-        └── diagram.png
+        ├── diagram.png
+        └── animation.mp4
 ```
 
 ## Post Template
@@ -96,6 +97,22 @@ Put images in the `images/` subfolder, then reference them:
 ```
 
 Images automatically get proper styling (max-width 100%, centered, margins).
+
+### Animations / Videos
+
+Use MP4 videos instead of GIFs (much smaller file size). Convert GIFs with FFmpeg:
+
+```bash
+ffmpeg -i animation.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" animation.mp4
+```
+
+Then embed with a video tag (autoplays and loops like a GIF):
+
+```html
+<video autoplay loop muted playsinline>
+    <source src="images/animation.mp4" type="video/mp4">
+</video>
+```
 
 ### Math with LaTeX
 

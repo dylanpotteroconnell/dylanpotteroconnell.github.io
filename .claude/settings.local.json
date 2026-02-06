@@ -20,7 +20,26 @@
       "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" add index.html styles.css CLAUDE.md projects/oscars-speech-game/index.html projects/oscars-speech-game/data.json)",
       "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" commit -m \"$\\(cat <<''EOF''\nAdd Oscars Speech Game and move contact links to footer\n\n- Add oscars-speech-game project files\n- Move email and LinkedIn to footer, remove GitHub link\n- Update CLAUDE.md with new repo name and URL\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" push)",
-      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" rm --cached CLAUDE.md)"
+      "Bash(git -C \"C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\" rm --cached CLAUDE.md)",
+      "Bash(ls:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(where:*)",
+      "Bash(cmd.exe /c \"where ffmpeg\")",
+      "Bash(cmd.exe /c \"cd /d C:\\\\Users\\\\dylan\\\\claude_playground\\\\personal_site\\\\blog\\\\local-optimization\\\\images && ffmpeg -i 2d_uni_grad_ascent_anim.gif -movflags faststart -pix_fmt yuv420p -vf \"\"scale=trunc\\(iw/2\\)*2:trunc\\(ih/2\\)*2\"\" 2d_uni_grad_ascent_anim.mp4 -y\")",
+      "Bash(powershell.exe -Command \"Get-Command ffmpeg | Select-Object -ExpandProperty Source\")",
+      "Bash(FFMPEG=\"/c/Users/dylan/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe\")",
+      "Bash(\"$FFMPEG\" -i 2d_uni_grad_ascent_anim.gif -movflags faststart -pix_fmt yuv420p -vf \"scale=trunc\\(iw/2\\)*2:trunc\\(ih/2\\)*2\" 2d_uni_grad_ascent_anim.mp4 -y)",
+      "Bash(IMGDIR=\"C:/Users/dylan/claude_playground/personal_site/blog/local-optimization/images\")",
+      "Bash(\"$FFMPEG\" -i \"$IMGDIR/2d_uni_grad_ascent_anim.gif\" -movflags faststart -pix_fmt yuv420p -vf \"scale=trunc\\(iw/2\\)*2:trunc\\(ih/2\\)*2\" \"$IMGDIR/2d_uni_grad_ascent_anim.mp4\" -y)",
+      "Bash(\"/c/Users/dylan/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.0.1-full_build/bin/ffmpeg.exe\" -i \"C:/Users/dylan/claude_playground/personal_site/blog/local-optimization/images/2d_uni_grad_ascent_anim.gif\" -movflags faststart -pix_fmt yuv420p -vf \"scale=trunc\\(iw/2\\)*2:trunc\\(ih/2\\)*2\" \"C:/Users/dylan/claude_playground/personal_site/blog/local-optimization/images/2d_uni_grad_ascent_anim.mp4\" -y)",
+      "Bash(for gif in 2d_mix_grad_ascent_anim 2d_mix_grad_ascent_optima_anim 2d_mix_grad_restarts_anim test_grad_ascent_anim test_noisy_ascent_anim)",
+      "Bash(do)",
+      "Bash(echo:*)",
+      "Bash(\"$FFMPEG\" -i \"$IMGDIR/$gif.gif\" -movflags faststart -pix_fmt yuv420p -vf \"scale=trunc\\(iw/2\\)*2:trunc\\(ih/2\\)*2\" \"$IMGDIR/$gif.mp4\" -y)",
+      "Bash(done)",
+      "Bash(git reset:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
