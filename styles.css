@@ -41,6 +41,15 @@ h1 {
     margin-bottom: 2rem;
 }
 
+.about a {
+    color: #1a6dd4;
+    text-decoration: none;
+}
+
+.about a:hover {
+    text-decoration: underline;
+}
+
 .contact {
     display: flex;
     gap: 1rem;
