@@ -39,7 +39,16 @@
       "Bash(done)",
       "Bash(git reset:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(gemini -p \"You are a web research assistant. Search the web thoroughly and report back.\n\nTASK:\nFind datasets of advertising images or ad copy that could be used for a humorous personal project. Focus on:\n1. HuggingFace datasets with vintage or historical ads\n2. Any public domain advertising image collections\n3. Ad copy/text datasets that could be used\n4. Licensing considerations for using these in a personal website project\n5. Typical dataset sizes and formats\n\nRESPONSE FORMAT — follow this exactly:\n\n## Key Findings\n- Concise bullet points of the most important facts \\(cite each with a source number, e.g. [1]\\)\n\n## Sources\n[1] Source Title — URL — One-line description\n[2] ...\n\n## Summary\n2-4 concise paragraphs covering the essential information. Cite sources inline.\n\n## Raw Data\nAny specific statistics, quotes, version numbers, release dates, or concrete data worth preserving.\n\nRULES:\n- Search the web. Do not rely on training data alone.\n- Cite every factual claim with a numbered source.\n- Be thorough in research but concise in output. No filler.\n- Prioritize recent, authoritative, primary sources.\n- If information conflicts between sources, note the discrepancy.\n- Only include URLs that you actually visited during your web search. Do not construct or guess URLs based on expected patterns.\" -y)",
+      "Bash(tee:*)",
+      "Bash(gemini:*)",
+      "WebFetch(domain:repository.duke.edu)",
+      "WebFetch(domain:www.loc.gov)",
+      "WebFetch(domain:www.rawpixel.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:library.duke.edu)",
+      "WebSearch"
     ]
   }
 }
