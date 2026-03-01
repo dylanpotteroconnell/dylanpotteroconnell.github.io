@@ -67,7 +67,7 @@
 
 <p>When \(z_i > 0\), we underestimated film \(i\)'s support among the Academy, and it has a better chance to win in <em>each</em> of its categories (inducing the desired correlation). Under independent outcomes, Sinners is quite likely to win around 4 awards (as it has many wholly independent shots at winning awards), whereas with these correlations, Sinners has a more plausible shot to win 5+ or 0.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 
-<p><img src="images/sinners_nwins_naive.png" alt="# Sinners Wins — Naive Correlation"></p>
+<p><img src="images/nwins_sinners_naive.png" alt="# Sinners Wins — Naive Correlation"></p>
 
 <p>However, this approach is fatally flawed, as it fails to preserve the correct <em>marginal probabilities</em>. Once we normalize the probabilities, it asymmetrically advantages longshot nominees (e.g., a film starting at 1% can be hugely benefitted from its \(z_i\) but its probability can't go much lower). Thus, F1 &amp; Frankenstein (two distant longshots) are now vastly more likely to win Best Picture than the probabilities we assumed as input.</p>
 
@@ -174,7 +174,7 @@
 
 <p>Returning to the original question, we can estimate the full probability distribution for how many Oscars "Sinners" will win:</p>
 
-<p><img src="images/sinners_nwins_correct.png" alt="# Sinners Wins — (Gamma) Correlation"></p>
+<p><img src="images/nwins_sinners_correct.png" alt="# Sinners Wins — (Gamma) Correlation"></p>
 
 <p>"Sinners" has 16 total nominations, but it's a favorite in just 3 categories (Score, Original Screenplay, &amp; Casting). Under independence, it's extremely likely to win 3 or 4 Oscars, in large part because it has many independent shots at an upset. Under the correlated model, we get more plausible results—there's a meaningful chance that "Sinners" is much weaker (e.g., winning just one) <em>or</em> much stronger (e.g., winning 7+) than we expect.</p>
 
@@ -183,8 +183,8 @@
 <div class="footnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Input probabilities for this blog post queried from Kalshi on March 1, 2026.<a href="#fnref1" class="footnote-back">&crarr;&xfe0e;</a></p></li>
-<li id="fn2"><p>The acting categories can have multiple nominees from the same film, violating the independence assumption required for the Gamma-Dirichlet relationship. In practice, the impact is mild (multiple nominees are rare and typically one or all are longshots).<a href="#fnref2" class="footnote-back">&crarr;&xfe0e;</a></p></li>
+<li id="fn1"><p>Input probabilities for this blog post queried from Kalshi on March 1, 2026.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The acting categories can have multiple nominees from the same film, violating the independence assumption required for the Gamma-Dirichlet relationship. In practice, the impact is mild (multiple nominees are rare and typically one or all are longshots).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
 

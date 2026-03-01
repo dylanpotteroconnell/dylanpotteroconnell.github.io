@@ -35,7 +35,7 @@ $$p_{i,j}' = \frac{\alpha_{i,j}}{\sum_{f \in C_j} \alpha_{f,j}}.$$
 3. **Generate winners**: Select winners independently in each category using the updated $p_{i,j}'$ probabilities.
 
 When $z_i > 0$, we underestimated film $i$'s support among the Academy, and it has a better chance to win in *each* of its categories (inducing the desired correlation). Under independent outcomes, Sinners is quite likely to win around 4 awards (as it has many wholly independent shots at winning awards), whereas with these correlations, Sinners has a more plausible shot to win 5+ or 0.[1]
-  ![# Sinners Wins — Naive Correlation](images/sinners_nwins_naive.png)                                                                                                                                          
+  ![# Sinners Wins — Naive Correlation](images/nwins_sinners_naive.png)                                                                                                                                          
 However, this approach is fatally flawed, as it fails to preserve the correct *marginal probabilities*. Once we normalize the probabilities, it asymmetrically advantages longshot nominees (e.g., a film starting at 1% can be hugely benefitted from its $z_i$ but its probability can't go much lower). Thus, F1 & Frankenstein (two distant longshots) are now vastly more likely to win Best Picture than the probabilities we assumed as input.
 
 ![Best Picture Probabilities — Naive Correlation](images/bp_naive.png)
@@ -104,7 +104,7 @@ It's deceptively hard to validate the choice of $k$, beyond checking our intuiti
 
 Returning to the original question, we can estimate the full probability distribution for how many Oscars "Sinners" will win: 
 
-![# Sinners Wins — (Gamma) Correlation](images/sinners_nwins_correct.png)
+![# Sinners Wins — (Gamma) Correlation](images/nwins_sinners_correct.png)
 
 "Sinners" has 16 total nominations, but it's a favorite in just 3 categories (Score, Original Screenplay, & Casting). Under independence, it's extremely likely to win 3 or 4 Oscars, in large part because it has many independent shots at an upset. Under the correlated model, we get more plausible results—there's a meaningful chance that "Sinners" is much weaker (e.g., winning just one) *or* much stronger (e.g., winning 7+) than we expect. 
 
