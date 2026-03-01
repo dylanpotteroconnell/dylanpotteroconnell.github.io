@@ -34,13 +34,13 @@ To operationalize this, the simulation needs additional steps: generate a random
 $$p_{i,j}' = \frac{\alpha_{i,j}}{\sum_{f \in C_j} \alpha_{f,j}}.$$
 3. **Generate winners**: Select winners independently in each category using the updated $p_{i,j}'$ probabilities.
 
-When $z_i > 0$, we underestimated film $i$'s support among the Academy, and it has a better chance to win in *each* of its categories (inducing the desired correlation). Under independent outcomes, Sinners is quite likely to win around ~4 awards (as it has many wholly independent shots at winning awards), whereas with these correlations, Sinners has a more plausible shot to win 5+ or 0.[1]
+When $z_i > 0$, we underestimated film $i$'s support among the Academy, and it has a better chance to win in *each* of its categories (inducing the desired correlation). Under independent outcomes, Sinners is quite likely to win around 4 awards (as it has many wholly independent shots at winning awards), whereas with these correlations, Sinners has a more plausible shot to win 5+ or 0.[1]
   ![# Sinners Wins — Naive Correlation](images/sinners_nwins_naive.png)                                                                                                                                          
 However, this approach is fatally flawed, as it fails to preserve the correct *marginal probabilities*. Once we normalize the probabilities, it asymmetrically advantages longshot nominees (e.g., a film starting at 1% can be hugely benefitted from its $z_i$ but its probability can't go much lower). Thus, F1 & Frankenstein (two distant longshots) are now vastly more likely to win Best Picture than the probabilities we assumed as input.
 
 ![Best Picture Probabilities — Naive Correlation](images/bp_naive.png)
 
-This is a non-starter, and fixing it requires more than a change of scale. These $z_i$ perturbations are on a flat (percentage point) scale, which doesn't seem quite right (as it has varying impact when a film's baseline probability is 1% or 70%), but updating the probabilities using the log-odds or using a different $z_i$ distribution won't fully fix the issue either. Instead, we need a way to perturb the probabilities on the correct scale so the marginal probabilities are preserved.
+This is a non-starter, and fixing it requires more than a change of scale. These $z_i$ perturbations are on a flat (percentage point) scale—a +5% shift matters much more at 1% than 70%. But updating the probabilities using the log-odds or using a different $z_i$ distribution won't fully fix the issue either. Instead, we need a way to perturb the probabilities on the correct scale so the marginal probabilities are preserved.
 ## How can we fix this?
 
 To fix this, we need three ingredients: a distribution that preserves marginal probabilities after normalization (Dirichlet), a way to construct it from simpler parts (Gamma variables), and a trick to correlate them across categories (the inverse CDF trick).
@@ -66,7 +66,7 @@ Thus, we need to generate Gamma random variables that are: (1) independent withi
 
 For example, if $u_i = 0.90$ for OBBA, then its $\alpha_{i,j}$ are each the 90th percentile of their Gamma distribution (and thus, they will all be substantially above their mean). This is an elegant solution: within each category, the Gamma variables are independent, but across different categories, the same films are now correlated (while preserving their unique mean).[2]
 
-Finally, note that the above properties hold if we instead multiply the means of the Gamma distributions ($p_{i,j}$) by the same constant $k$ (as it cancels in the normalization step). This is helpful because we can adjust $k$ to adjust the *strength* of the correlation we want to induce (discussed further below).
+Finally, note that the above properties hold if we instead multiply the means of the Gamma distributions ($p_{i,j}$) by the same constant $k$ (as it cancels in the normalization step). This is helpful because we can tune $k$ to adjust the *strength* of the correlation we want to induce (discussed further below).
 ## Fixed model
 
 If we put it all together, it looks like this:
@@ -83,22 +83,22 @@ This now preserves the correct marginal probabilities:
 ![Best Picture Probabilities — Correct (Gamma) Correlation](images/bp_correct.png)
 ## How strong should the correlation be?
 
-The final choice for the model is the parameter $k$ in the Gamma function, which determines the strength of the correlation: $\alpha_{i,j} = F^{-1}_{\text{Gamma}}(u_i;\; \text{shape}=k \cdot p_{i,j})$. The strength of the correlation is an *input* to the model—we need to tweak $k$ until specific conditional probability outputs seem plausible.
+The final choice for the model is $k$, which determines the strength of the correlation: $\alpha_{i,j} = F^{-1}_{\text{Gamma}}(u_i;\; \text{shape}=k \cdot p_{i,j})$. The strength of the correlation is an *input* to the model—we need to tweak $k$ until specific conditional probability outputs seem plausible.
 
-To calibrate $k$, consider the impact of two other wins ("conditioning event") on the Best Picture odds:
+To calibrate $k$, consider the impact of a major upset in Best Actor on the Best Picture odds:
 
 * $p(\text{Event})$: original probability that "Sinners" wins Best Actor.
 * $p(\text{BP})$: original probability that "Sinners" wins Best Picture.
 * $p(\text{BP} \mid \text{Event})$: probability that "Sinners" wins Best Picture, once we condition on "Sinners" winning Best Actor.
 
-| Conditioning event | $p(\text{Event})$ | $p(\text{BP})$ | $p(\text{BP} \mid \text{Event})$ |
-| ------------------ | ----------------- | -------------- | -------------------------------- |
-| $k=0.5$            | 11%               | 9%             | 43%                              |
-| $k=1$              | 11%               | 9%             | 37%                              |
-| $k=2$              | 11%               | 9%             | 30%                              |
+| Correlation Strength | $p(\text{Event})$ | $p(\text{BP})$ | $p(\text{BP} \mid \text{Event})$ |
+| -------------------- | ----------------- | -------------- | -------------------------------- |
+| $k=0.5$              | 11%               | 9%             | 43%                              |
+| $k=1$                | 11%               | 9%             | 37%                              |
+| $k=2$                | 11%               | 9%             | 30%                              |
 To my eye, the probability updates under $k=0.5$ and $k=1$ are a bit too severe, whereas $k=2$ looks about right, so I'll use $k=2$ going forward. This is ultimately a subjective choice—given the size of this upset in Best Actor, some might believe that it is hugely informative about the Best Picture race, whereas others might think these are separate categories and we shouldn't overreact.
 
-It's deceptively hard to validate the choice of $k$, beyond checking our intuition for specific examples. A dataset of historical Oscars results can't tell you much about the correlations (e.g., "did 'Titanic' win 11 Oscars because the outcomes were correlated, or because its chance in each individual category was high?"). The "correlation" in this model is not an intrinsic property of the awards, rather, it refers to our *subjective* beliefs about forecasting Academy voters (and how over and underperformance relative to our expectations tends to be a film-wide property).
+It's deceptively hard to validate the choice of $k$, beyond checking our intuition for specific examples. A dataset of historical Oscars results can't tell you much about the correlations (e.g., "did 'Titanic' win 11 Oscars because the outcomes were correlated, or because its chance in each individual category was high?"). The "correlation" in this model is not an intrinsic property of the awards; rather, it refers to our *subjective* beliefs about forecasting Academy voters (and how over and underperformance relative to our expectations tends to be a film-wide property).
 
 ## Results
 
