@@ -48,7 +48,18 @@
       "WebFetch(domain:www.rawpixel.com)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:library.duke.edu)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(powershell -Command:*)",
+      "Bash(python:*)",
+      "WebFetch(domain:news-navigator.labs.loc.gov)",
+      "WebFetch(domain:people.cs.pitt.edu)",
+      "WebFetch(domain:archive.org)",
+      "Bash(dir:*)",
+      "WebFetch(domain:labs.loc.gov)",
+      "WebFetch(domain:bcglee.github.io)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:madverse24.github.io)",
+      "Bash(cd:*)"
     ]
   }
 }

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ads on demand - Dylan O'Connell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: #222;
+    background: #faf8f5;
+    line-height: 1.6;
+    padding: 4rem 1.5rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  header {
+    max-width: 360px;
+    margin: 0 auto 3rem;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  header p {
+    font-size: 1rem;
+    color: #444;
+  }
+
+  .input-section {
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  .input-section h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+
+  .input-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .input-form input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: white;
+  }
+
+  .input-form input:focus {
+    outline: none;
+    border-color: #1a6dd4;
+  }
+
+  .input-form button {
+    padding: 0.75rem 1.5rem;
+    background: #1a6dd4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .input-form button:hover {
+    background: #155db0;
+  }
+
+  .ads-grid {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0 auto 2rem;
+  }
+
+  .ad-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+
+  .ad-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .ad-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #fafafa;
+  }
+
+  /* Layout: rect — 4 medium rectangles (300x250) in 2x2 grid */
+  .ads-grid.layout-rect {
+    max-width: 640px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Layout: leaderboard — 4 wide banners (728x90) stacked vertically */
+  .ads-grid.layout-leaderboard {
+    max-width: 700px;
+    grid-template-columns: 1fr;
+  }
+
+  /* Layout: tall — 3 skyscrapers (160x600, 300x600) side by side */
+  .ads-grid.layout-tall {
+    max-width: 600px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ads-grid.layout-tall .ad-card img {
+    max-height: 450px;
+  }
+
+  /* Layout: billboard — 3 wide panels (970x250) stacked */
+  .ads-grid.layout-billboard {
+    max-width: 750px;
+    grid-template-columns: 1fr;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .error {
+    background: #fff4f4;
+    color: #c33;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    text-align: center;
+    border: 1px solid #ffdddd;
+  }
+
+  footer {
+    max-width: 600px;
+    margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+    text-align: center;
+  }
+
+  footer p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  footer a {
+    color: #1a6dd4;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .input-form {
+      flex-direction: column;
+    }
+
+    .input-form input,
+    .input-form button {
+      width: 100%;
+    }
+
+    .ads-grid.layout-rect {
+      grid-template-columns: 1fr;
+      max-width: 320px;
+    }
+
+    .ads-grid.layout-tall {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 2rem 1rem;
+    }
+
+    .ads-grid.layout-tall {
+      grid-template-columns: 1fr;
+      max-width: 200px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Ads on demand</h1>
+    </header>
+
+    <div class="input-section">
+      <form class="input-form" id="interestForm">
+        <input
+          type="text"
+          id="interestInput"
+          placeholder="e.g., technology, travel, fitness, cooking..."
+          autocomplete="off"
+        />
+        <button type="submit">Ads</button>
+      </form>
+    </div>
+
+    <div id="adsContainer"></div>
+
+    <footer>
+      <p><a href="sources.html">Sources</a></p>
+      <p><a href="../../index.html">← Back to dylanoconnell.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // Size buckets: group common ad dimensions into layout-friendly categories
+    const SIZE_BUCKETS = {
+      rect:        { dims: [[300,250], [336,280], [250,250]], count: 4, layout: 'layout-rect' },
+      leaderboard: { dims: [[728,90], [970,90], [320,50]],   count: 4, layout: 'layout-leaderboard' },
+      tall:        { dims: [[300,600], [160,600]],            count: 3, layout: 'layout-tall' },
+      billboard:   { dims: [[970,250]],                       count: 3, layout: 'layout-billboard' },
+    };
+
+    function getSizeBucket(ad) {
+      if (!ad.dimensions || ad.dimensions.length !== 2) return null;
+      const [w, h] = ad.dimensions;
+      for (const [name, bucket] of Object.entries(SIZE_BUCKETS)) {
+        if (bucket.dims.some(([bw, bh]) => bw === w && bh === h)) return name;
+      }
+      return null;
+    }
+
+    // AdMatcher class for personalized ad selection
+    class AdMatcher {
+      constructor(ads) {
+        this.ads = ads;
+        // Pre-index ads by size bucket
+        this.byBucket = {};
+        for (const ad of ads) {
+          const bucket = getSizeBucket(ad);
+          if (bucket) {
+            (this.byBucket[bucket] = this.byBucket[bucket] || []).push(ad);
+          }
+        }
+      }
+
+      extractKeywords(text) {
+        if (!text) return [];
+
+        const stopWords = new Set([
+          'the', 'and', 'for', 'with', 'this', 'that', 'from', 'your', 'you',
+          'are', 'can', 'will', 'all', 'new', 'now', 'get', 'our', 'has', 'more',
+          'i', 'me', 'my', 'am', 'like', 'love', 'want', 'need', 'about'
+        ]);
+
+        return text.toLowerCase()
+          .replace(/[^a-z0-9\s]/g, ' ')
+          .split(/\s+/)
+          .filter(word => word.length >= 3 && !stopWords.has(word));
+      }
+
+      scoreAd(ad, userKeywords) {
+        if (!userKeywords.length) return 0;
+
+        let score = 0;
+        const adKeywords = (ad.keywords || []).map(k => k.toLowerCase());
+        const adCategories = (ad.categories || []).map(c => c.toLowerCase());
+        const adText = (ad.text || '').toLowerCase();
+
+        for (const userKw of userKeywords) {
+          if (adKeywords.includes(userKw)) {
+            score += 40 / userKeywords.length;
+          }
+        }
+
+        for (const userKw of userKeywords) {
+          for (const category of adCategories) {
+            if (category.includes(userKw) || userKw.includes(category.replace(/\s+/g, ''))) {
+              score += 40 / userKeywords.length;
+              break;
+            }
+          }
+        }
+
+        for (const userKw of userKeywords) {
+          if (adText.includes(userKw)) {
+            score += 20 / userKeywords.length;
+          }
+        }
+
+        return Math.min(score, 100);
+      }
+
+      // Pick the best bucket and its top ads for given keywords
+      getTopAdsWithLayout(userInterests) {
+        const keywords = this.extractKeywords(userInterests);
+
+        // Score the top ads in each bucket, pick bucket with best average score
+        const candidates = [];
+
+        for (const [bucketName, bucket] of Object.entries(SIZE_BUCKETS)) {
+          const ads = this.byBucket[bucketName];
+          if (!ads || ads.length < bucket.count) continue;
+
+          const scored = ads.map(ad => ({
+            ad,
+            score: this.scoreAd(ad, keywords)
+          }));
+          scored.sort((a, b) => b.score - a.score);
+
+          const top = scored.slice(0, bucket.count);
+          const avgScore = top.reduce((sum, s) => sum + s.score, 0) / bucket.count;
+
+          candidates.push({
+            layout: bucket.layout,
+            ads: top.map(s => s.ad),
+            avgScore
+          });
+        }
+
+        if (candidates.length === 0) {
+          return this.getFallbackAdsWithLayout();
+        }
+
+        // Sort by average score descending
+        candidates.sort((a, b) => b.avgScore - a.avgScore);
+
+        // If the top candidates have similar scores, randomly pick among them
+        // to provide layout variety
+        const best = candidates[0].avgScore;
+        const threshold = Math.max(best * 0.7, best - 5);
+        const viable = candidates.filter(c => c.avgScore >= threshold);
+
+        return viable[Math.floor(Math.random() * viable.length)];
+      }
+
+      getFallbackAdsWithLayout() {
+        // Randomly pick from all available buckets
+        const available = [];
+        for (const [name, bucket] of Object.entries(SIZE_BUCKETS)) {
+          const ads = this.byBucket[name];
+          if (ads && ads.length >= bucket.count) {
+            available.push(name);
+          }
+        }
+
+        if (available.length === 0) {
+          const shuffled = [...this.ads].sort(() => Math.random() - 0.5);
+          return { layout: 'layout-rect', ads: shuffled.slice(0, 4) };
+        }
+
+        const pick = available[Math.floor(Math.random() * available.length)];
+        const bucket = SIZE_BUCKETS[pick];
+        const ads = this.byBucket[pick];
+        const shuffled = [...ads].sort(() => Math.random() - 0.5);
+        return { layout: bucket.layout, ads: shuffled.slice(0, bucket.count) };
+      }
+    }
+
+    // Global state
+    let adsData = null;
+    let adMatcher = null;
+
+    // Load ads data
+    async function loadAds() {
+      try {
+        const response = await fetch('ads.json');
+        if (!response.ok) throw new Error('Failed to load ads data');
+
+        const data = await response.json();
+        adsData = data.ads;
+        adMatcher = new AdMatcher(adsData);
+
+        // Show random ads initially
+        displayAds(adMatcher.getFallbackAdsWithLayout());
+      } catch (error) {
+        showError('Error loading ads. Please refresh the page.');
+        console.error(error);
+      }
+    }
+
+    // Display ads in grid with specified layout
+    function displayAds(result) {
+      const container = document.getElementById('adsContainer');
+      const layout = result.layout || 'layout-rect';
+      const ads = result.ads;
+
+      if (!ads || ads.length === 0) {
+        container.innerHTML = '<p class="error">No ads found. Try different interests!</p>';
+        return;
+      }
+
+      // DEBUG: Set to true to show ad IDs, paths, dimensions, and layout name
+      const showDebugInfo = false;
+
+      const gridHTML = `
+        <div class="ads-grid ${layout}">
+          ${ads.map((ad, idx) => `
+            <div class="ad-card">
+              <img src="${ad.image_path}" alt="Advertisement" ${showDebugInfo ? `onerror="console.error('Failed to load:', '${ad.image_path}')"` : ''} />
+              ${showDebugInfo ? `<div style="padding: 0.5rem; font-size: 0.75rem; color: #666; background: #f9f9f9;">
+                ID: ${ad.id}<br>
+                Path: ${ad.image_path}<br>
+                Size: ${ad.dimensions ? ad.dimensions.join('x') : 'unknown'}<br>
+                Layout: ${layout}
+              </div>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      container.innerHTML = gridHTML;
+    }
+
+    // Show loading state
+    function showLoading() {
+      document.getElementById('adsContainer').innerHTML =
+        '<div class="loading">Loading your personalized ads...</div>';
+    }
+
+    // Show error message
+    function showError(message) {
+      document.getElementById('adsContainer').innerHTML =
+        `<div class="error">${message}</div>`;
+    }
+
+    // Handle form submission
+    document.getElementById('interestForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const input = document.getElementById('interestInput');
+      const interests = input.value.trim();
+
+      if (!adMatcher) {
+        showError('Ads data not loaded yet. Please wait...');
+        return;
+      }
+
+      showLoading();
+
+      // Small delay for UX
+      setTimeout(() => {
+        const result = adMatcher.getTopAdsWithLayout(interests);
+        displayAds(result);
+      }, 300);
+    });
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      showLoading();
+      loadAds();
+    });
+  </script>
+</body>
+</html>
