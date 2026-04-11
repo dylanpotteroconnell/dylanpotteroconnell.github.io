@@ -166,6 +166,15 @@ Code blocks (no syntax highlighting, just monospace):
 </code></pre>
 ```
 
+## Converting from Markdown
+
+Posts are sometimes drafted in Markdown and converted to HTML. Watch for these pitfalls:
+
+- **Math delimiters**: Convert `$...$` to `\(...\)` (inline) and `$$...$$` to `\[...\]` (display). KaTeX uses these delimiters, not dollar signs.
+- **Footnote back-links**: Use the literal Unicode character `↩︎` in footnote back-links, NOT HTML entities like `&crarr;&xfe0e;` (which render as broken text in some browsers).
+- **Arrows**: Convert ASCII arrows `->` to the Unicode arrow `→`.
+- **Plot backgrounds**: If plots have white backgrounds, they'll clash with the site's ivory (`#faf8f5`). Re-export plots with matching background color.
+
 ## Adding to Homepage
 
 After creating your post, add it to `index.html` in the Miscellany section:
